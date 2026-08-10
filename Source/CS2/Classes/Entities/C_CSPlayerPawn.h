@@ -10,6 +10,8 @@ namespace cs2
 
 struct CCSPlayer_HostageServices;
 struct CCSPlayer_WeaponServices;
+struct CCSPlayer_ViewModelServices;
+struct C_EconItemView;
 
 struct C_CSPlayerPawn : C_BaseModelEntity {
     using m_bGunGameImmunity = bool;
@@ -21,6 +23,10 @@ struct C_CSPlayerPawn : C_BaseModelEntity {
     using m_flFlashBangTime = float;
     using sceneObjectUpdaterHandle = SceneObjectUpdaterHandle_t*;
     using m_bIsScoped = bool;
+    using m_pViewModelServices = CCSPlayer_ViewModelServices*;
+    using m_EconGloves = C_EconItemView;
+    using m_bNeedToReApplyGloves = bool;
+    using m_nEconGlovesChanged = std::uint8_t;
 };
 
 }

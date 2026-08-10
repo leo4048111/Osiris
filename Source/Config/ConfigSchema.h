@@ -166,6 +166,16 @@ private:
         configConversion.uint(u8"Fov", loadVariable<viewmodel_mod_vars::Fov>(), saveVariable<viewmodel_mod_vars::Fov>());
         configConversion.endObject();
 
+        configConversion.beginObject(u8"EquipmentModelChanger");
+        configConversion.boolean(u8"Enabled", loadVariable<equipment_model_changer_vars::Enabled>(), saveVariable<equipment_model_changer_vars::Enabled>());
+        configConversion.uint(u8"KnifeModelId", loadVariable<equipment_model_changer_vars::KnifeModelId>(), saveVariable<equipment_model_changer_vars::KnifeModelId>());
+        configConversion.uint(u8"GunModelId", loadVariable<equipment_model_changer_vars::GunModelId>(), saveVariable<equipment_model_changer_vars::GunModelId>());
+        configConversion.uint(u8"GloveModelId", loadVariable<equipment_model_changer_vars::GloveModelId>(), saveVariable<equipment_model_changer_vars::GloveModelId>());
+        configConversion.uint(u8"KnifePaintKitId", loadVariable<equipment_model_changer_vars::KnifePaintKitId>(), saveVariable<equipment_model_changer_vars::KnifePaintKitId>());
+        configConversion.uint(u8"GunPaintKitId", loadVariable<equipment_model_changer_vars::GunPaintKitId>(), saveVariable<equipment_model_changer_vars::GunPaintKitId>());
+        configConversion.uint(u8"GlovePaintKitId", loadVariable<equipment_model_changer_vars::GlovePaintKitId>(), saveVariable<equipment_model_changer_vars::GlovePaintKitId>());
+        configConversion.endObject();
+
         configConversion.endObject();
     }
 
@@ -220,8 +230,9 @@ private:
                 if constexpr (std::is_same_v<color::HueInteger, typename ConfigVariable::ValueType::ValueType>) {
                     color::HueInteger hue{std::clamp(saturateCast<color::HueInteger::UnderlyingType>(value), color::HueInteger::kMin, color::HueInteger::kMax)};
                     hookContext.config().template setVariableWithoutAutoSave<ConfigVariable>(typename ConfigVariable::ValueType{std::clamp(hue, ConfigVariable::ValueType::kMin, ConfigVariable::ValueType::kMax)});
-                } else if constexpr (std::is_same_v<std::uint8_t, typename ConfigVariable::ValueType::ValueType>) {
-                    hookContext.config().template setVariableWithoutAutoSave<ConfigVariable>(typename ConfigVariable::ValueType{std::clamp(saturateCast<std::uint8_t>(value), ConfigVariable::ValueType::kMin, ConfigVariable::ValueType::kMax)});
+                } else if constexpr (std::unsigned_integral<typename ConfigVariable::ValueType::ValueType>) {
+                    using ValueType = typename ConfigVariable::ValueType::ValueType;
+                    hookContext.config().template setVariableWithoutAutoSave<ConfigVariable>(typename ConfigVariable::ValueType{std::clamp(saturateCast<ValueType>(value), ConfigVariable::ValueType::kMin, ConfigVariable::ValueType::kMax)});
                 } else {
                     static_assert(!std::is_same_v<ConfigVariable, ConfigVariable>, "Unsupported type");
                 }

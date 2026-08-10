@@ -232,6 +232,9 @@
     <Filter Include="Features\Visuals\ViewmodelMod">
       <UniqueIdentifier>{63f981c9-ffe5-426e-8a58-569a43712e91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Features\Visuals\EquipmentModelChanger">
+      <UniqueIdentifier>{8d9b94cf-1a8c-4b4a-8df3-c2bed8a4575c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Features\Combat">
       <UniqueIdentifier>{a7e69fbf-3ca6-470a-abde-6380959510c3}</UniqueIdentifier>
     </Filter>
@@ -1936,6 +1939,9 @@
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\PlayerInfoInWorldDropdownSelectionChangeHandler.h">
       <Filter>UI\Panorama\Tabs\VisualsTab</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Panorama\Tabs\VisualsTab\EquipmentModelPresetDropdownSelectionChangeHandler.h">
+      <Filter>UI\Panorama\Tabs\VisualsTab</Filter>
+    </ClInclude>
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\PlayerInfoInWorldPlayerHealthColorModeDropdownSelectionChangeHandler.h">
       <Filter>UI\Panorama\Tabs\VisualsTab</Filter>
     </ClInclude>
@@ -1953,6 +1959,24 @@
     </ClInclude>
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\PlayerOutlineGlowDropdownSelectionChangeHandler.h">
       <Filter>UI\Panorama\Tabs\VisualsTab</Filter>
+    </ClInclude>
+    <ClInclude Include="CS2\Classes\CEconItemView.h">
+      <Filter>CS2\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChanger.h">
+      <Filter>Features\Visuals\EquipmentModelChanger</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChangerConfigVariables.h">
+      <Filter>Features\Visuals\EquipmentModelChanger</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelPresets.h">
+      <Filter>Features\Visuals\EquipmentModelChanger</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChangerParams.h">
+      <Filter>Features\Visuals\EquipmentModelChanger</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChangerState.h">
+      <Filter>Features\Visuals\EquipmentModelChanger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,7 @@ struct EntityPatterns {
             .template addPattern<OffsetToVData, CodePattern{"89 ? ? ? ? 48 85 C9 74 ? 48 8B 49 ? 48 8D"}.add(1).read()>()
             .template addPattern<OffsetToRenderComponent, CodePattern{"0F 84 ? ? ? ? 49 8B 8D ? ? ? ? 48 85 C9"}.add(9).read()>()
             .template addPattern<OffsetToOwnerEntity, CodePattern{"44 8B 81 ? ? ? ? 4C 8B DA"}.add(3).read()>()
-            .template addPattern<GetAbsOriginFunction, CodePattern{"F8 ? 75 ? E8 ? ? ? ? F3"}.add(5).abs()>();
+            .template addPattern<GetAbsOriginFunction, CodePattern{"F8 ? 75 ? E8 ? ? ? ? F3"}.add(5).abs()>()
+            .template addPattern<UpdateSubclassFunction, CodePattern{"4C 8B DC 53 48 81 EC 90 01 00 00 48 8B 41 10 48 8B D9 8B 50 30 C1 EA 04 F6 C2 01"}>();
     }
 };

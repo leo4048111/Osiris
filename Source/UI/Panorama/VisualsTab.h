@@ -1,5 +1,6 @@
 #pragma once
 
+#include <concepts>
 #include <Features/Visuals/ModelGlow/ModelGlowState.h>
 #include <Features/Visuals/PlayerInfoInWorld/PlayerStateIcons/PlayerStateIconsToShow.h>
 #include <GameClient/Panorama/PanoramaDropDown.h>
@@ -9,6 +10,7 @@
 #include <EntryPoints/GuiEntryPoints.h>
 
 #include "Tabs/VisualsTab/PlayerInfoInWorldDropdownSelectionChangeHandler.h"
+#include "Tabs/VisualsTab/EquipmentModelPresetDropdownSelectionChangeHandler.h"
 #include "Tabs/VisualsTab/PlayerInfoInWorldPlayerHealthColorModeDropdownSelectionChangeHandler.h"
 #include "Tabs/VisualsTab/PlayerInfoInWorldPlayerPositionArrowColorModeDropdownSelectionChangeHandler.h"
 #include "Tabs/VisualsTab/PlayerModelGlowColorModeDropdownSelectionChangeHandler.h"
@@ -126,6 +128,10 @@ private:
     {
         initDropDown<OnOffDropdownSelectionChangeHandler<HookContext, viewmodel_mod_vars::Enabled>>(guiPanel, "viewmodel_mod");
         initDropDown<OnOffDropdownSelectionChangeHandler<HookContext, viewmodel_mod_vars::ModifyFov>>(guiPanel, "viewmodel_fov_mod");
+        initDropDown<OnOffDropdownSelectionChangeHandler<HookContext, equipment_model_changer_vars::Enabled>>(guiPanel, "equipment_model_changer");
+        initDropDown<EquipmentModelPresetDropdownSelectionChangeHandler<HookContext, EquipmentModelPresetCategory::Knife>>(guiPanel, "knife_model_preset");
+        initDropDown<EquipmentModelPresetDropdownSelectionChangeHandler<HookContext, EquipmentModelPresetCategory::Gun>>(guiPanel, "gun_model_preset");
+        initDropDown<EquipmentModelPresetDropdownSelectionChangeHandler<HookContext, EquipmentModelPresetCategory::Glove>>(guiPanel, "glove_model_preset");
     }
 
     template <typename Handler>
@@ -227,15 +233,29 @@ private:
         setDropDownSelectedIndex(mainMenu, "viewmodel_mod", !GET_CONFIG_VAR(viewmodel_mod_vars::Enabled));
         setDropDownSelectedIndex(mainMenu, "viewmodel_fov_mod", !GET_CONFIG_VAR(viewmodel_mod_vars::ModifyFov));
         updateSlider<viewmodel_mod_vars::Fov>(mainMenu, "viewmodel_fov");
+        setDropDownSelectedIndex(mainMenu, "equipment_model_changer", !GET_CONFIG_VAR(equipment_model_changer_vars::Enabled));
+        setDropDownSelectedIndex(mainMenu, "knife_model_preset",
+            equipment_model_presets::indexOf<EquipmentModelPresetCategory::Knife>(
+                static_cast<std::uint16_t>(GET_CONFIG_VAR(equipment_model_changer_vars::KnifeModelId)),
+                static_cast<std::uint16_t>(GET_CONFIG_VAR(equipment_model_changer_vars::KnifePaintKitId))));
+        setDropDownSelectedIndex(mainMenu, "gun_model_preset",
+            equipment_model_presets::indexOf<EquipmentModelPresetCategory::Gun>(
+                static_cast<std::uint16_t>(GET_CONFIG_VAR(equipment_model_changer_vars::GunModelId)),
+                static_cast<std::uint16_t>(GET_CONFIG_VAR(equipment_model_changer_vars::GunPaintKitId))));
+        setDropDownSelectedIndex(mainMenu, "glove_model_preset",
+            equipment_model_presets::indexOf<EquipmentModelPresetCategory::Glove>(
+                static_cast<std::uint16_t>(GET_CONFIG_VAR(equipment_model_changer_vars::GloveModelId)),
+                static_cast<std::uint16_t>(GET_CONFIG_VAR(equipment_model_changer_vars::GlovePaintKitId))));
     }
 
     template <typename ConfigVariable>
     void updateSlider(auto&& mainMenu, const char* sliderId) const noexcept
     {
-        updateSlider(mainMenu, sliderId, GET_CONFIG_VAR(ConfigVariable));
+        using ValueType = typename ConfigVariable::ValueType::ValueType;
+        updateSlider(mainMenu, sliderId, static_cast<ValueType>(GET_CONFIG_VAR(ConfigVariable)));
     }
 
-    void updateSlider(auto&& mainMenu, const char* sliderId, std::uint8_t value) const noexcept
+    void updateSlider(auto&& mainMenu, const char* sliderId, std::unsigned_integral auto value) const noexcept
     {
         auto&& slider = hookContext.template make<IntSlider>(mainMenu.findChildInLayoutFile(sliderId));
         slider.updateSlider(value);

@@ -408,7 +408,7 @@ u8R"(
     slider.increment = 1.0;
 
     var textEntry = $.CreatePanel('TextEntry', sliderContainer, id + '_text', {
-      maxchars: "3",
+      maxchars: "5",
       textmode: "numeric",
       style: "width: 75px; margin-left: 10px; padding-left: 10px; text-align: center; font-size: 20px; color: #ccccccff; font-weight: bold; font-family: Stratum2, notosans, 'Arial Unicode MS'; border: 2px solid #cccccc15;"
     });
@@ -725,6 +725,49 @@ u8R"(
   createYesNoDropDown(viewmodelFov, "Modify Viewmodel Fov", 'visuals', 'viewmodel_fov_mod');
   separator(viewmodelFov);
   createSlider(viewmodelFov, "Fov", 'viewmodel_fov', 40, 90);
+
+  var equipmentModelChanger = createSection(viewmodelTab, 'Local Equipment Models');
+  createOnOffDropDown(equipmentModelChanger, "Master Switch", 'visuals', 'equipment_model_changer');
+  separator(equipmentModelChanger);
+  createDropDown(equipmentModelChanger, "Knife Model + Skin", 'visuals', 'knife_model_preset', [
+    'Original',
+    'Bayonet | Doppler (500 / 415)',
+    'Classic Knife | Fade (503 / 38)',
+    'Flip Knife | Doppler (505 / 415)',
+    'Gut Knife | Lore (506 / 558)',
+    'Karambit | Marble Fade (507 / 413)',
+    'M9 Bayonet | Marble Fade (508 / 413)',
+    'Huntsman Knife | Tiger Tooth (509 / 409)',
+    'Butterfly Knife | Fade (515 / 38)',
+    'Talon Knife | Marble Fade (523 / 413)',
+    'Skeleton Knife | Fade (525 / 38)',
+    'Kukri Knife | Fade (526 / 38)'
+  ]);
+  separator(equipmentModelChanger);
+  createDropDown(equipmentModelChanger, "Gun Model + Skin", 'visuals', 'gun_model_preset', [
+    'Original',
+    'Desert Eagle | Blaze (1 / 37)',
+    'Glock-18 | Fade (4 / 38)',
+    'AK-47 | Redline (7 / 282)',
+    'AWP | Dragon Lore (9 / 344)',
+    'M4A4 | Asiimov (16 / 255)',
+    'P90 | Asiimov (19 / 359)',
+    'SSG 08 | Dragonfire (40 / 624)',
+    'M4A1-S | Printstream (60 / 984)',
+    'USP-S | Kill Confirmed (61 / 504)'
+  ]);
+  separator(equipmentModelChanger);
+  createDropDown(equipmentModelChanger, "Glove Model + Skin", 'visuals', 'glove_model_preset', [
+    'Original',
+    'Bloodhound Gloves | Charred (5027 / 10006)',
+    'Sport Gloves | Pandora\'s Box (5030 / 10037)',
+    'Sport Gloves | Vice (5030 / 10048)',
+    'Driver Gloves | King Snake (5031 / 10041)',
+    'Hand Wraps | Cobalt Skulls (5032 / 10053)',
+    'Moto Gloves | Spearmint (5033 / 10026)',
+    'Specialist Gloves | Crimson Kimono (5034 / 10033)',
+    'Hydra Gloves | Emerald (5035 / 10057)'
+  ]);
 
   $.Osiris.navigateToSubTab('visuals', 'player_info');
 

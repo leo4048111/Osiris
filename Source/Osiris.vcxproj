@@ -50,6 +50,7 @@
     <ClInclude Include="CS2\Classes\CUtlString.h" />
     <ClInclude Include="CS2\Classes\CUtlVector.h" />
     <ClInclude Include="CS2\Classes\CViewRender.h" />
+    <ClInclude Include="CS2\Classes\CEconItemView.h" />
     <ClInclude Include="CS2\Classes\C_CSGameRules.h" />
     <ClInclude Include="CS2\Classes\Entities\CBaseAnimGraph.h" />
     <ClInclude Include="CS2\Classes\Entities\CCSPlayerController.h" />
@@ -258,6 +259,11 @@
     <ClInclude Include="Features\Visuals\ViewmodelMod\ViewmodelMod.h" />
     <ClInclude Include="Features\Visuals\ViewmodelMod\ViewmodelModConfigVariables.h" />
     <ClInclude Include="Features\Visuals\ViewmodelMod\ViewmodelModParams.h" />
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChanger.h" />
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChangerConfigVariables.h" />
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelPresets.h" />
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChangerParams.h" />
+    <ClInclude Include="Features\Visuals\EquipmentModelChanger\EquipmentModelChangerState.h" />
     <ClInclude Include="Features\Visuals\VisualFeaturesStates.h" />
     <ClInclude Include="GameClient\ConVars\ConVarsBase.h" />
     <ClInclude Include="GameClient\ConVars\ConVarTypes.h" />
@@ -524,6 +530,7 @@
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\HueSlider.h" />
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\IntSlider.h" />
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\PlayerInfoInWorldDropdownSelectionChangeHandler.h" />
+    <ClInclude Include="UI\Panorama\Tabs\VisualsTab\EquipmentModelPresetDropdownSelectionChangeHandler.h" />
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\PlayerInfoInWorldPlayerHealthColorModeDropdownSelectionChangeHandler.h" />
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\PlayerInfoInWorldPlayerPositionArrowColorModeDropdownSelectionChangeHandler.h" />
     <ClInclude Include="UI\Panorama\Tabs\VisualsTab\PlayerModelGlowColorModeDropdownSelectionChangeHandler.h" />

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <concepts>
 #include <GameClient/Panorama/PanoramaUiPanel.h>
 #include <GameClient/Panorama/Slider.h>
 #include <Utils/StringBuilder.h>
@@ -13,12 +14,12 @@ public:
     {
     }
 
-    void updateSlider(std::uint8_t value) const noexcept
+    void updateSlider(std::unsigned_integral auto value) const noexcept
     {
         panel().children()[0].clientPanel().template as<Slider>().setValue(value);
     }
 
-    void updateTextEntry(std::uint8_t value) const noexcept
+    void updateTextEntry(std::unsigned_integral auto value) const noexcept
     {
         panel().children()[1].clientPanel().template as<TextEntry>()
             .setText(StringBuilderStorage<100>{}.builder().put(value).cstring());

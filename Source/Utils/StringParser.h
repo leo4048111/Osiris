@@ -35,15 +35,16 @@ public:
 
         IntegralType parsedInteger{};
         bool parseSuccessful = false;
+        bool overflowed = false;
 
-        std::size_t currentDigit = 0;
         while (*string >= '0' && *string <= '9') {
-            if (currentDigit < std::numeric_limits<IntegralType>::digits10) {
+            const auto digit = static_cast<IntegralType>(*string - '0');
+            if (!overflowed && parsedInteger <= ((std::numeric_limits<IntegralType>::max)() - digit) / 10) {
                 parsedInteger *= 10;
-                parsedInteger += (*string - '0');
-                ++currentDigit;
+                parsedInteger += digit;
                 parseSuccessful = true;
             } else {
+                overflowed = true;
                 parseSuccessful = false;
             }
 

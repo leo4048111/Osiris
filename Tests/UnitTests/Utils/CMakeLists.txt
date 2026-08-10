@@ -8,4 +8,5 @@ target_sources(UnitTests PRIVATE
   ReturnAddressTests.cpp
   SpanSliceTests.cpp
   StringBuilderTests.cpp
+  StringParserTests.cpp
 )

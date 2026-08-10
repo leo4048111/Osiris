@@ -174,6 +174,13 @@ protected:
     void setVariableExpectationsCurrent()
     {
         setVariableExpectationsV10();
+        get<equipment_model_changer_vars::Enabled>() = false;
+        get<equipment_model_changer_vars::KnifeModelId>() = equipment_model_changer_vars::KnifeModelId::ValueType{0};
+        get<equipment_model_changer_vars::GunModelId>() = equipment_model_changer_vars::GunModelId::ValueType{0};
+        get<equipment_model_changer_vars::GloveModelId>() = equipment_model_changer_vars::GloveModelId::ValueType{0};
+        get<equipment_model_changer_vars::KnifePaintKitId>() = equipment_model_changer_vars::KnifePaintKitId::ValueType{0};
+        get<equipment_model_changer_vars::GunPaintKitId>() = equipment_model_changer_vars::GunPaintKitId::ValueType{0};
+        get<equipment_model_changer_vars::GlovePaintKitId>() = equipment_model_changer_vars::GlovePaintKitId::ValueType{0};
     }
 
     struct VariableChecker {

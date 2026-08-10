@@ -8,6 +8,7 @@
 #include <Features/Hud/PostRoundTimer/PostRoundTimerConfigVariables.h>
 #include <Features/Sound/SoundVisualizationConfigVariables.h>
 #include <Features/Visuals/ModelGlow/ModelGlowConfigVariables.h>
+#include <Features/Visuals/EquipmentModelChanger/EquipmentModelChangerConfigVariables.h>
 #include <Features/Visuals/OutlineGlow/OutlineGlowConfigVariables.h>
 #include <Features/Visuals/PlayerInfoInWorld/PlayerInfoInWorldConfigVariables.h>
 #include <Features/Visuals/ViewmodelMod/ViewmodelModConfigVariables.h>
@@ -97,6 +98,13 @@ using ConfigVariableTypes = TypeList<
     viewmodel_mod_vars::Enabled,
     viewmodel_mod_vars::ModifyFov,
     viewmodel_mod_vars::Fov,
+    equipment_model_changer_vars::Enabled,
+    equipment_model_changer_vars::KnifeModelId,
+    equipment_model_changer_vars::GunModelId,
+    equipment_model_changer_vars::GloveModelId,
+    equipment_model_changer_vars::KnifePaintKitId,
+    equipment_model_changer_vars::GunPaintKitId,
+    equipment_model_changer_vars::GlovePaintKitId,
     no_scope_inaccuracy_vis_vars::Enabled,
     BombPlantAlertEnabled
 >;

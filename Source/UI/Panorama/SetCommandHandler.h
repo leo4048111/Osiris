@@ -1,5 +1,6 @@
 #pragma once
 
+#include <concepts>
 #include <Features/Combat/SniperRifles/NoScopeInaccuracyVis/NoScopeInaccuracyVisConfigVariables.h>
 #include <Features/Visuals/PlayerInfoInWorld/PlayerInfoInWorld.h>
 #include <GameClient/Panorama/Slider.h>
@@ -55,13 +56,15 @@ private:
     template <typename ConfigVariable>
     void handleIntSlider(const char* sliderId) const noexcept
     {
-        const auto newVariableValue = handleIntSlider(sliderId, ConfigVariable::ValueType::kMin, ConfigVariable::ValueType::kMax, GET_CONFIG_VAR(ConfigVariable));
+        using ValueType = typename ConfigVariable::ValueType::ValueType;
+        const auto newVariableValue = handleIntSlider(sliderId, ConfigVariable::ValueType::kMin, ConfigVariable::ValueType::kMax, static_cast<ValueType>(GET_CONFIG_VAR(ConfigVariable)));
         hookContext.config().template setVariable<ConfigVariable>(typename ConfigVariable::ValueType{newVariableValue});
     }
 
-    [[nodiscard]] std::uint8_t handleIntSlider(const char* sliderId, std::uint8_t min, std::uint8_t max, std::uint8_t current) const noexcept
+    template <std::unsigned_integral ValueType>
+    [[nodiscard]] ValueType handleIntSlider(const char* sliderId, ValueType min, ValueType max, ValueType current) const noexcept
     {
-        std::uint8_t value{};
+        ValueType value{};
         if (!parser.parseInt(value) || value == current || value < min || value > max)
             return current;
 
@@ -73,14 +76,16 @@ private:
     template <typename ConfigVariable>
     void handleIntSliderTextEntry(const char* sliderId) const noexcept
     {
-        const auto newVariableValue = handleIntSliderTextEntry(sliderId, ConfigVariable::ValueType::kMin, ConfigVariable::ValueType::kMax, GET_CONFIG_VAR(ConfigVariable));
+        using ValueType = typename ConfigVariable::ValueType::ValueType;
+        const auto newVariableValue = handleIntSliderTextEntry(sliderId, ConfigVariable::ValueType::kMin, ConfigVariable::ValueType::kMax, static_cast<ValueType>(GET_CONFIG_VAR(ConfigVariable)));
         hookContext.config().template setVariable<ConfigVariable>(typename ConfigVariable::ValueType{newVariableValue});
     }
 
-    [[nodiscard]] std::uint8_t handleIntSliderTextEntry(const char* sliderId, std::uint8_t min, std::uint8_t max, std::uint8_t current) const noexcept
+    template <std::unsigned_integral ValueType>
+    [[nodiscard]] ValueType handleIntSliderTextEntry(const char* sliderId, ValueType min, ValueType max, ValueType current) const noexcept
     {
         auto&& slider = getIntSlider(sliderId);
-        std::uint8_t value{};
+        ValueType value{};
         if (!parser.parseInt(value) || value < min || value > max) {
             slider.updateTextEntry(current);
             return current;
