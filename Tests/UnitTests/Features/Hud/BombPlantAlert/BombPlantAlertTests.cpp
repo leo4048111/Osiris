@@ -373,7 +373,7 @@ TEST_P(BombPlantAlertPanelCreationTest, PanelIsCreatedCorrectly) {
     EXPECT_CALL(mockTimerPanel, setColor(bomb_plant_alert_params::kPositiveTimerColor));
     EXPECT_CALL(mockLabelPanel, setText(testing::StrEq("0.5")));
 
-    EXPECT_CALL(mockPanelHandle, getOrInit(testing::_)).WillOnce(testing::WithArg<0>(testing::Invoke(
+    EXPECT_CALL(mockPanelHandle, getOrInit(testing::_)).WillOnce(testing::WithArg<0>(
         [this](auto&& f) -> decltype(auto) {
             EXPECT_CALL(mockHookContext, makeBombPlantAlertPanelFactory()).WillOnce(testing::ReturnRef(mockBombPlantAlertPanelFactory));
             EXPECT_CALL(mockHookContext, hud()).WillOnce(testing::ReturnRef(mockHud));
@@ -404,7 +404,7 @@ TEST_P(BombPlantAlertPanelCreationTest, PanelIsCreatedCorrectly) {
 
             return container;
         }
-    )));
+    ));
     EXPECT_EQ(bombPlantAlert.show(mockPlayerPawn), Visibility::Visible);
 }
 

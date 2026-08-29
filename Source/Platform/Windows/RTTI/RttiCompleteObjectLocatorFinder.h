@@ -23,7 +23,7 @@ public:
         HybridPatternFinder typeDescriptorCrossReferenceFinder{rdataSection.raw(), BytePattern::ofObject(typeDescriptorRva)};
 
         auto typeDescriptorReference{typeDescriptorCrossReferenceFinder.findNextOccurrence()};
-        while (typeDescriptorReference && (!isCompleteObjectLocator(reinterpret_cast<std::uintptr_t>(typeDescriptorReference)) || !isCompleteObjectLocatorOfCompleteClass(typeDescriptorReference)))
+        while (typeDescriptorReference && !isCompleteObjectLocator(reinterpret_cast<std::uintptr_t>(typeDescriptorReference)))
             typeDescriptorReference = typeDescriptorCrossReferenceFinder.findNextOccurrence();
 
         if (typeDescriptorReference)
@@ -33,22 +33,26 @@ public:
     }
 
 private:
-    [[nodiscard]] bool isCompleteObjectLocatorOfCompleteClass(const std::byte* typeDescriptorReference) const noexcept
-    {
-        std::uint32_t offsetInCompleteClass;
-        std::memcpy(&offsetInCompleteClass, typeDescriptorReference - RttiCompleteObjectLocator::kOffsetOfTypeDescriptorRva + RttiCompleteObjectLocator::kOffsetOfOffsetInCompleteClass, sizeof(std::uint32_t));
-        return offsetInCompleteClass == 0;
-    }
-
     [[nodiscard]] bool isCompleteObjectLocator(std::uintptr_t typeDescriptorReference) const noexcept
     {
-        const auto rva{toRvaConverter.toRva(typeDescriptorReference)};
-        return hasNoCrossReferences(BytePattern::ofObject(rva)) && rdataSection.offsetOf(typeDescriptorReference) >= RttiCompleteObjectLocator::kOffsetOfTypeDescriptorRva;
+        const auto completeObjectLocatorBase = typeDescriptorReference - RttiCompleteObjectLocator::kOffsetOfTypeDescriptorRva;
+        if (!rdataSection.contains(completeObjectLocatorBase, RttiCompleteObjectLocator::kSizeOf))
+            return false;
+        return selfRvaMatches(completeObjectLocatorBase) && isCompleteObjectLocatorOfCompleteClass(completeObjectLocatorBase);
     }
 
-    [[nodiscard]] bool hasNoCrossReferences(BytePattern pattern) const noexcept
+    [[nodiscard]] bool selfRvaMatches(std::uintptr_t completeObjectLocatorBase) const noexcept
     {
-        return HybridPatternFinder{rdataSection.raw(), pattern}.findNextOccurrence() == nullptr;
+        std::uint32_t selfRva;
+        std::memcpy(&selfRva, reinterpret_cast<void*>(completeObjectLocatorBase + RttiCompleteObjectLocator::kOffsetOfSelfRva), sizeof(selfRva));
+        return selfRva == toRvaConverter.toRva(completeObjectLocatorBase);
+    }
+
+    [[nodiscard]] bool isCompleteObjectLocatorOfCompleteClass(std::uintptr_t completeObjectLocatorBase) const noexcept
+    {
+        std::uint32_t offsetInCompleteClass;
+        std::memcpy(&offsetInCompleteClass, reinterpret_cast<void*>(completeObjectLocatorBase + RttiCompleteObjectLocator::kOffsetOfOffsetInCompleteClass), sizeof(offsetInCompleteClass));
+        return offsetInCompleteClass == 0;
     }
 
     MemorySection rdataSection;

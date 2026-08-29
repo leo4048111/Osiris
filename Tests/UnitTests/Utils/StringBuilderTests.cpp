@@ -90,9 +90,9 @@ TEST_F(TestStringBuilder, IntegerCanBeWrittenAsHexadecimal) {
 
 TEST_F(TestStringBuilder, PutAcceptsInvocable) {
     testing::MockFunction<void(StringBuilder& builder)> mockInvocable;
-    EXPECT_CALL(mockInvocable, Call(testing::Ref(builder))).WillOnce(testing::Invoke(
+    EXPECT_CALL(mockInvocable, Call(testing::Ref(builder))).WillOnce(
         [](StringBuilder& builder) { builder.put("123"); }
-    ));
+    );
     builder.put(mockInvocable.AsStdFunction());
     EXPECT_EQ(builder.string(), "123");
 }

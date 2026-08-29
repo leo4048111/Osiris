@@ -51,7 +51,7 @@ TEST_F(NoScopeInaccuracyVisTest, PanelIsCreatedWhenDoesNotExist) {
     EXPECT_CALL(mockHookContext, featuresStates()).WillOnce(testing::ReturnRef(featuresStates));
     EXPECT_CALL(mockHookContext, makePanelHandle(featuresStates.noScopeInaccuracyVisState.panelHandle)).WillOnce(testing::ReturnRef(mockPanelHandle));
     EXPECT_CALL(mockHookContext, activeLocalPlayerPawn()).WillOnce(testing::ReturnRef(mockLocalPlayerPawn));
-    EXPECT_CALL(mockPanelHandle, getOrInit(testing::_)).WillOnce(testing::WithArg<0>(testing::Invoke([this](auto&& panelFactoryFunctor) -> decltype(auto) {
+    EXPECT_CALL(mockPanelHandle, getOrInit(testing::_)).WillOnce(testing::WithArg<0>([this](auto&& panelFactoryFunctor) -> decltype(auto) {
         EXPECT_CALL(mockHookContext, hud()).WillOnce(testing::ReturnRef(mockHud));
         EXPECT_CALL(mockHud, getHudReticle()).WillOnce(testing::ReturnRef(mockHudReticle));
         EXPECT_CALL(mockHookContext, panelFactory()).WillOnce(testing::ReturnRef(mockPanelFactory));
@@ -59,12 +59,12 @@ TEST_F(NoScopeInaccuracyVisTest, PanelIsCreatedWhenDoesNotExist) {
         EXPECT_CALL(mockClientPanel, uiPanel()).WillOnce(testing::ReturnRef(mockPanel));
         EXPECT_CALL(mockPanel, setWidth(cs2::CUILength::heightPercentage(100)));
         EXPECT_CALL(mockPanel, setBorderRadius(cs2::CUILength::percent(50)));
-        EXPECT_CALL(mockPanel, setAlign(testing::_)).WillOnce(testing::WithArg<0>(testing::Invoke([](const auto& panelAlignmentParams) {
+        EXPECT_CALL(mockPanel, setAlign(testing::_)).WillOnce(testing::WithArg<0>([](const auto& panelAlignmentParams) {
             EXPECT_EQ(panelAlignmentParams.horizontalAlignment, cs2::k_EHorizontalAlignmentCenter);
             EXPECT_EQ(panelAlignmentParams.verticalAlignment, cs2::k_EVerticalAlignmentCenter);
-        })));
+        }));
         return panelFactoryFunctor();
-    })));
+    }));
     EXPECT_CALL(mockLocalPlayerPawn, operatorBool()).WillOnce(testing::Return(true));
     EXPECT_CALL(mockLocalPlayerPawn, isScoped()).WillOnce(testing::Return(false));
     EXPECT_CALL(mockLocalPlayerPawn, isUsingSniperRifle()).WillOnce(testing::Return(true));

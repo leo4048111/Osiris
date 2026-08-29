@@ -269,7 +269,7 @@ protected:
     void enableVariableExpectationsForSetting()
     {
         for (auto [variableIndex, valueChecker] : expectedVariableValues)
-            EXPECT_CALL(mockConfig, setVariableWithoutAutoSave(variableIndex, testing::_)).WillOnce(testing::Invoke(valueChecker));
+            EXPECT_CALL(mockConfig, setVariableWithoutAutoSave(variableIndex, testing::_)).WillOnce(valueChecker);
     }
 
     void prepareLoadOperation(std::vector<char8_t>& fileContents)

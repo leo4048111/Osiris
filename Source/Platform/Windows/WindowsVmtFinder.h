@@ -25,6 +25,7 @@ public:
         const auto completeObjectLocatorPrecedingVmt{findCompleteObjectLocatorPrecedingVmt(mangledTypeName)};
         if (vmtSection.contains(reinterpret_cast<std::uintptr_t>(completeObjectLocatorPrecedingVmt), kOffsetToVmt))
             return completeObjectLocatorPrecedingVmt + kOffsetToVmt;
+        assert(false && "Failed to find VMT!");
         return nullptr;
     }
 
